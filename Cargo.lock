@@ -954,6 +954,7 @@ version = "0.18.0"
 dependencies = [
  "bon",
  "burn-candle",
+ "burn-core",
  "burn-cubecl",
  "burn-cuda",
  "burn-fusion",
