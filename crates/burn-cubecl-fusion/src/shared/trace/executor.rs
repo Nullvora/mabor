@@ -9,7 +9,7 @@ use cubecl::{
 };
 
 use super::{
-    FuseResources, HandleInput, HandleOutput, LaunchPlan, ReferenceSelection, TensorView,
+    FuseResources, HandleOutput, LaunchPlan, NormalHandleInput, ReferenceSelection, TensorView,
     TraceError, TraceRunner, TuneOutput, block::FuseBlock,
 };
 use crate::{
@@ -17,6 +17,7 @@ use crate::{
     shared::{
         ir::{FuseBlockConfig, FuseOp, FusePrecision, GlobalArgsLaunch, RefLayout, VirtualLayout},
         tensor::{GlobalScalar, GlobalTensorArg},
+        trace::HandleInput,
     },
 };
 
@@ -148,12 +149,33 @@ fn register_inputs<'h, R: Runtime>(
     inputs: &mut GlobalArgsLaunch<'h, R>,
 ) {
     for hi in handle_inputs.iter() {
-        let arg = hi.handle.as_tensor_arg(&hi.global_shape, hi.vectorization);
-        inputs.tensors.push(GlobalTensorArg::new(
-            arg,
-            hi.precision.into_elem(),
-            hi.broadcated,
-        ));
+        match hi {
+            HandleInput::Normal(hi) => {
+                let arg = hi
+                    .handle
+                    .as_tensor_arg(&hi.global_ir.shape, hi.vectorization);
+                inputs.tensors.push(GlobalTensorArg::new(
+                    arg,
+                    hi.precision.into_elem(),
+                    hi.broadcated,
+                ));
+            }
+            HandleInput::QuantData(hi) => {
+                let arg = hi
+                    .handle
+                    .as_tensor_arg(&hi.global_ir.shape, hi.vectorization);
+                inputs
+                    .tensors
+                    .push(GlobalTensorArg::new(arg, hi.precision.into_elem(), false));
+            }
+            HandleInput::QuantScales(hi) => {
+                // todo!("Use the scale to compute the correct shape");
+                let arg = hi.handle.as_tensor_arg(&[1], 1);
+                inputs
+                    .tensors
+                    .push(GlobalTensorArg::new(arg, hi.precision.into_elem(), false));
+            }
+        }
     }
 }
 
@@ -223,6 +245,14 @@ fn register_scalars<'h, R: Runtime>(
 ) {
     for (precision, id) in scalars {
         match precision {
+            FusePrecision::F64 => {
+                inputs.scalars.push(GlobalScalar::F64(
+                    match context.scalars.get(&ScalarId { value: *id }) {
+                        Some(ScalarValue::F64(val)) => *val,
+                        _ => panic!(),
+                    },
+                ));
+            }
             FusePrecision::F32 | FusePrecision::Flex32 => {
                 inputs.scalars.push(GlobalScalar::F32(
                     match context.scalars.get(&ScalarId { value: *id }) {
