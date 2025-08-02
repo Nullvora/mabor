@@ -13,7 +13,7 @@
 
 ---
 
-**Burn is a next generation Deep Learning Framework that doesn't compromise on <br />
+**Mabor is a next generation Deep Learning Framework that doesn't compromise on <br />
 flexibility, efficiency and portability.**
 
 <br/>
@@ -27,7 +27,7 @@ flexibility, efficiency and portability.**
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-blazingly-fast.png" height="96px"/>
 
 Because we believe the goal of a deep learning framework is to convert computation into useful
-intelligence, we have made performance a core pillar of Burn. We strive to achieve top efficiency by
+intelligence, we have made performance a core pillar of Mabor. We strive to achieve top efficiency by
 leveraging multiple optimization techniques described below.
 
 **Click on each section for more details** 👇
@@ -42,7 +42,7 @@ Automatic kernel fusion 💥
 </summary>
 <br />
 
-Using Burn means having your models optimized on any backend. When possible, we provide a way to
+Using Mabor means having your models optimized on any backend. When possible, we provide a way to
 automatically and dynamically create custom kernels that minimize data relocation between different
 memory spaces, extremely useful when moving memory is the bottleneck.
 
@@ -88,9 +88,9 @@ Thread-safe building blocks 🦞
 </summary>
 <br />
 
-Burn emphasizes thread safety by leveraging the
+Mabor emphasizes thread safety by leveraging the
 [ownership system of Rust](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html).
-With Burn, each module is the owner of its weights. It is therefore possible to send a module to
+With Mabor, each module is the owner of its weights. It is therefore possible to send a module to
 another thread for computing the gradients, then send the gradients to the main thread that can
 aggregate them, and _voilà_, you get multi-device training.
 
@@ -112,11 +112,11 @@ One of the main roles of a deep learning framework is to reduce the amount of me
 run models. The naive way of handling memory is that each tensor has its own memory space, which is
 allocated when the tensor is created then deallocated as the tensor gets out of scope. However,
 allocating and deallocating data is very costly, so a memory pool is often required to achieve good
-throughput. Burn offers an infrastructure that allows for easily creating and selecting memory
-management strategies for backends. For more details on memory management in Burn, see
+throughput. Mabor offers an infrastructure that allows for easily creating and selecting memory
+management strategies for backends. For more details on memory management in Mabor, see
 [this blog post](https://burn.dev/blog/creating-high-performance-asynchronous-backends-with-burn-compute).
 
-Another very important memory optimization of Burn is that we keep track of when a tensor can be
+Another very important memory optimization of Mabor is that we keep track of when a tensor can be
 mutated in-place just by using the ownership system well. Even though it is a rather small memory
 optimization on its own, it adds up considerably when training or running inference with larger
 models and contributes to reduce the memory usage even more. For more information, see
@@ -170,13 +170,13 @@ Custom Backend Extension 🎒
 </summary>
 <br />
 
-Burn aims to be the most flexible deep learning framework. While it's crucial to maintain
-compatibility with a wide variety of backends, Burn also provides the ability to extend the
+Mabor aims to be the most flexible deep learning framework. While it's crucial to maintain
+compatibility with a wide variety of backends, Mabor also provides the ability to extend the
 functionalities of a backend implementation to suit your personal modeling requirements.
 
 This versatility is advantageous in numerous ways, such as supporting custom operations like flash
 attention or manually writing your own kernel for a specific backend to enhance performance. See
-[this section](https://burn.dev/books/burn/advanced/backend-extension/index.html) in the Burn Book 🔥
+[this section](https://burn.dev/books/burn/advanced/backend-extension/index.html) in the Mabor Book 🔥
 for more details.
 
 </details>
@@ -188,7 +188,7 @@ for more details.
 <div align="left">
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/backend-chip.png" height="96px"/>
 
-Burn strives to be as fast as possible on as many hardwares as possible, with robust implementations.
+Mabor strives to be as fast as possible on as many hardwares as possible, with robust implementations.
 We believe this flexibility is crucial for modern needs where you may train your models in the cloud,
 then deploy on customer hardwares, which vary from user to user.
 
@@ -211,8 +211,8 @@ then deploy on customer hardwares, which vary from user to user.
 
 <br />
 
-Compared to other frameworks, Burn has a very different approach to supporting many backends. By
-design, most code is generic over the Backend trait, which allows us to build Burn with swappable
+Compared to other frameworks, Mabor has a very different approach to supporting many backends. By
+design, most code is generic over the Backend trait, which allows us to build Mabor with swappable
 backends. This makes composing backend possible, augmenting them with additional functionalities
 such as autodifferentiation and automatic kernel fusion.
 
@@ -229,8 +229,8 @@ The simple act of wrapping a base backend with Autodiff transparently equips it 
 autodifferentiation support, making it possible to call backward on your model.
 
 ```rust
-use burn::backend::{Autodiff, Wgpu};
-use burn::tensor::{Distribution, Tensor};
+use mabor::backend::{Autodiff, Wgpu};
+use mabor::tensor::{Distribution, Tensor};
 
 fn main() {
     type Backend = Autodiff<Wgpu>;
@@ -267,8 +267,8 @@ supports it. Note that you can compose this backend with other backend decorator
 For now, only the WGPU and CUDA backends have support for fused kernels.
 
 ```rust
-use burn::backend::{Autodiff, Fusion, Wgpu};
-use burn::tensor::{Distribution, Tensor};
+use mabor::backend::{Autodiff, Fusion, Wgpu};
+use mabor::tensor::{Distribution, Tensor};
 
 fn main() {
     type Backend = Autodiff<Fusion<Wgpu>>;
@@ -304,8 +304,8 @@ Router (Beta): Backend decorator that composes multiple backends into a single o
 That backend simplifies hardware operability, if for instance you want to execute some operations on the CPU and other operations on the GPU.
 
 ```rust
-use burn::tensor::{Distribution, Tensor};
-use burn::backend::{
+use mabor::tensor::{Distribution, Tensor};
+use mabor::backend::{
     NdArray, Router, Wgpu, ndarray::NdArrayDevice, router::duo::MultiDevice, wgpu::WgpuDevice,
 };
 
@@ -316,9 +316,9 @@ fn main() {
     let device_1 = MultiDevice::B2(NdArrayDevice::Cpu);
 
     let tensor_gpu =
-        Tensor::<Backend, 2>::random([3, 3], burn::tensor::Distribution::Default, &device_0);
+        Tensor::<Backend, 2>::random([3, 3], mabor::tensor::Distribution::Default, &device_0);
     let tensor_cpu =
-        Tensor::<Backend, 2>::random([3, 3], burn::tensor::Distribution::Default, &device_1);
+        Tensor::<Backend, 2>::random([3, 3], mabor::tensor::Distribution::Default, &device_1);
 }
 
 ```
@@ -338,12 +338,12 @@ You can use any first-party backend as server in a single line of code:
 ```rust
 fn main_server() {
     // Start a server on port 3000.
-    burn::server::start::<burn::backend::Cuda>(Default::default(), 3000);
+    mabor::server::start::<mabor::backend::Cuda>(Default::default(), 3000);
 }
 
 fn main_client() {
     // Create a client that communicate with the server on port 3000.
-    use burn::backend::{Autodiff, RemoteBackend};
+    use mabor::backend::{Autodiff, RemoteBackend};
 
     type Backend = Autodiff<RemoteDevice>;
 
@@ -363,12 +363,12 @@ fn main_client() {
 <div align="left">
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-wall.png" height="96px"/>
 
-The whole deep learning workflow is made easy with Burn, as you can monitor your training progress
+The whole deep learning workflow is made easy with Mabor, as you can monitor your training progress
 with an ergonomic dashboard, and run inference everywhere from embedded devices to large GPU
 clusters.
 
-Burn was built from the ground up with training and inference in mind. It's also worth noting how
-Burn, in comparison to frameworks like PyTorch, simplifies the transition from training to
+Mabor was built from the ground up with training and inference in mind. It's also worth noting how
+Mabor, in comparison to frameworks like PyTorch, simplifies the transition from training to
 deployment, eliminating the need for code changes.
 
 </div>
@@ -412,12 +412,12 @@ ONNX Support 🐫
 ONNX (Open Neural Network Exchange) is an open-standard format that exports both the architecture
 and the weights of a deep learning model.
 
-Burn supports the importation of models that follow the ONNX standard so you can easily port a model
-you have written in another framework like TensorFlow or PyTorch to Burn to benefit from all the
+Mabor supports the importation of models that follow the ONNX standard so you can easily port a model
+you have written in another framework like TensorFlow or PyTorch to Mabor to benefit from all the
 advantages our framework offers.
 
 Our ONNX support is further described in
-[this section of the Burn Book 🔥](https://burn.dev/books/burn/import/onnx-model.html).
+[this section of the Mabor Book 🔥](https://burn.dev/books/burn/import/onnx-model.html).
 
 > **Note**: This crate is in active development and currently supports a
 > [limited set of ONNX operators](./crates/burn-import/SUPPORTED-ONNX-OPS.md).
@@ -430,11 +430,11 @@ Importing PyTorch or Safetensors Models 🚚
 </summary>
 <br />
 
-You can load weights from PyTorch or Safetensors formats directly into your Burn-defined models. This makes it easy to reuse existing models while benefiting from Burn's performance and deployment features.
+You can load weights from PyTorch or Safetensors formats directly into your Mabor-defined models. This makes it easy to reuse existing models while benefiting from Mabor's performance and deployment features.
 
 Learn more:
 
-- [Import pre-trained PyTorch models into Burn](https://burn.dev/books/burn/import/pytorch-model.html)
+- [Import pre-trained PyTorch models into Mabor](https://burn.dev/books/burn/import/pytorch-model.html)
 - [Load models from Safetensors format](https://burn.dev/books/burn/import/safetensors-model.html)
 
 </details>
@@ -462,7 +462,7 @@ Embedded: <i>no_std</i> support ⚙️
 </summary>
 <br />
 
-Burn's core components support [no_std](https://docs.rust-embedded.org/book/intro/no-std.html). This
+Mabor's core components support [no_std](https://docs.rust-embedded.org/book/intro/no-std.html). This
 means it can run in bare metal environment such as embedded devices without an operating system.
 
 > As of now, only the NdArray backend can be used in a _no_std_ environment.
@@ -476,7 +476,7 @@ means it can run in bare metal environment such as embedded devices without an o
 To evaluate performance across different backends and track improvements over time, we provide a
 dedicated benchmarking suite.
 
-Run and compare benchmarks using [burn-bench](https://github.com/tracel-ai/burn-bench).
+Run and compare benchmarks using [mabor-bench](https://github.com/tracel-ai/burn-bench).
 
 > ⚠️ **Warning**
 > When using one of the `wgpu` backends, you may encounter compilation errors related to recursive type evaluation. This is due to complex type nesting within the `wgpu` dependency chain.
@@ -493,20 +493,20 @@ Run and compare benchmarks using [burn-bench](https://github.com/tracel-ai/burn-
 <div align="left">
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-walking.png" height="96px"/>
 
-Just heard of Burn? You are at the right place! Just continue reading this section and we hope you
+Just heard of Mabor? You are at the right place! Just continue reading this section and we hope you
 can get on board really quickly.
 
 </div>
 
 <details>
 <summary>
-The Burn Book 🔥
+The Mabor Book 🔥
 </summary>
 <br />
 
-To begin working effectively with Burn, it is crucial to understand its key components and
+To begin working effectively with Mabor, it is crucial to understand its key components and
 philosophy. This is why we highly recommend new users to read the first sections of
-[The Burn Book 🔥](https://burn.dev/books/burn/). It provides detailed examples and explanations
+[The Mabor Book 🔥](https://burn.dev/books/burn/). It provides detailed examples and explanations
 covering every facet of the framework, including building blocks like tensors, modules, and
 optimizers, all the way to advanced usage, like coding your own GPU kernels.
 
@@ -526,9 +526,9 @@ Let's start with a code snippet that shows how intuitive the framework is to use
 we declare a neural network module with some parameters along with its forward pass.
 
 ```rust
-use burn::nn;
-use burn::module::Module;
-use burn::tensor::backend::Backend;
+use mabor::nn;
+use mabor::module::Module;
+use mabor::tensor::backend::Backend;
 
 #[derive(Module, Debug)]
 pub struct PositionWiseFeedForward<B: Backend> {
@@ -572,7 +572,7 @@ Additional examples:
 - [Custom Renderer](./examples/custom-renderer) : Implements a custom renderer to display the
   [`Learner`](./building-blocks/learner.md) progress.
 - [Image Classification Web](./examples/image-classification-web) : Image classification web browser
-  demo using Burn, WGPU and WebAssembly.
+  demo using Mabor, WGPU and WebAssembly.
 - [MNIST Inference on Web](./examples/mnist-inference-web) : An interactive MNIST inference demo in
   the browser. The demo is available [online](https://burn.dev/demo/).
 - [MNIST Training](./examples/mnist) : Demonstrates how to train a custom `Module` (MLP) with the
@@ -580,9 +580,9 @@ Additional examples:
 - [Named Tensor](./examples/named-tensor) : Performs operations with the experimental `NamedTensor`
   feature.
 - [ONNX Import Inference](./examples/onnx-inference) : Imports an ONNX model pre-trained on MNIST to
-  perform inference on a sample image with Burn.
+  perform inference on a sample image with Mabor.
 - [PyTorch Import Inference](./examples/pytorch-import) : Imports a PyTorch model pre-trained on
-  MNIST to perform inference on a sample image with Burn.
+  MNIST to perform inference on a sample image with Mabor.
 - [Text Classification](./examples/text-classification) : Trains a text classification transformer
   model on the AG News or DbPedia dataset. The trained model can then be used to classify a text
   sample.
@@ -602,11 +602,11 @@ Pre-trained Models 🤖
 </summary>
 <br />
 
-We keep an updated and curated list of models and examples built with Burn, see the
+We keep an updated and curated list of models and examples built with Mabor, see the
 [tracel-ai/models repository](https://github.com/tracel-ai/models) for more details.
 
 Don't see the model you want? Don't hesitate to open an issue, and we may prioritize it. Built a
-model using Burn and want to share it? You can also open a Pull Request and add your model under the
+model using Mabor and want to share it? You can also open a Pull Request and add your model under the
 community section!
 
 </details>
@@ -710,12 +710,12 @@ which explains some of our architectural decisions. Refer to our
 
 ## Status
 
-Burn is currently in active development, and there will be breaking changes. While any resulting
+Mabor is currently in active development, and there will be breaking changes. While any resulting
 issues are likely to be easy to fix, there are no guarantees at this stage.
 
 ## License
 
-Burn is distributed under the terms of both the MIT license and the Apache License (Version 2.0).
+Mabor is distributed under the terms of both the MIT license and the Apache License (Version 2.0).
 See [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) for details. Opening a pull
 request is assumed to signal agreement with these licensing terms.
 
