@@ -1,11 +1,11 @@
-# Contributing to the Burn Project
+# Contributing to the Mabor Project
 
-Welcome to the Burn project! We're thrilled that you're considering contributing to our project.
+Welcome to the Mabor project! We're thrilled that you're considering contributing to our project.
 Every contribution helps, and we're delighted to have you on board.
 
 ## How to Contribute?
 
-Here are some steps to guide you through the process of contributing to the Burn project:
+Here are some steps to guide you through the process of contributing to the Mabor project:
 
 ### Step 1: Review the Issue Tickets
 
@@ -21,7 +21,7 @@ interact with each other. This will give you the context needed to make meaningf
 
 ### Step 3: Fork and Clone the Repository
 
-Before you can start making changes, you'll need to fork the Burn repository and clone it to your
+Before you can start making changes, you'll need to fork the Mabor repository and clone it to your
 local machine. This can be done via the GitHub website or the GitHub Desktop application. Here are
 the steps:
 
@@ -61,7 +61,7 @@ Note that under the hood `run-checks` runs the `cargo xtask validate` command wh
 the [tracel-xtask crate](https://github.com/tracel-ai/xtask). It is recommended to get familiar with
 it as it provides a wide variety of commands to help you work with the code base.
 
-If you have an error related to `torch` installation, see [Burn Torch Backend Installation](./crates/burn-tch/README.md#Installation)
+If you have an error related to `torch` installation, see [Mabor Torch Backend Installation](./crates/burn-tch/README.md#Installation)
 
 Format and lint errors can often be fixed automatically using the command `cargo xtask fix all`.
 
@@ -136,8 +136,8 @@ cargo set-version --bump minor
 
 ---
 
-We look forward to seeing your contributions to the Burn project. Happy coding!
+We look forward to seeing your contributions to the Mabor project. Happy coding!
 
 If you have any questions and would like to get in touch with us, please feel free to join our
 discord server:
-[![Discord](https://img.shields.io/discord/1038839012602941528.svg?color=7289da&&logo=discord)](https://discord.gg/uPEBbYYDB6)
+[![Discord](https://img.shields.io/discord/1038839012602941528.svg?color=7289da&&logo=discord)]()
