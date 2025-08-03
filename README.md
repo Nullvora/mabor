@@ -9,8 +9,7 @@
 
 ---
 
-**Mabor is a next generation Deep Learning Framework that doesn't compromise on <br />
-flexibility, efficiency and portability.**
+**Mabor is a cutting-edge deep learning framework built to deliver flexibility, efficiency, and portability—without trade-offs.**
 
 <br/>
 </div>
@@ -22,9 +21,7 @@ flexibility, efficiency and portability.**
 <div align="left">
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-blazingly-fast.png" height="96px"/>
 
-Because we believe the goal of a deep learning framework is to convert computation into useful
-intelligence, we have made performance a core pillar of Mabor. We strive to achieve top efficiency by
-leveraging multiple optimization techniques described below.
+At Mabor, we believe a deep learning framework should transform computation into meaningful intelligence. That’s why performance is one of our core principles. We aim for peak efficiency by applying a range of optimization techniques outlined below.
 
 **Click on each section for more details** 👇
 
@@ -38,9 +35,7 @@ Automatic kernel fusion 💥
 </summary>
 <br />
 
-Using Mabor means having your models optimized on any backend. When possible, we provide a way to
-automatically and dynamically create custom kernels that minimize data relocation between different
-memory spaces, extremely useful when moving memory is the bottleneck.
+With Mabor, your models are optimized across any backend. When applicable, we offer automated, dynamic generation of custom kernels that reduce data movement between memory spaces—especially valuable when memory transfer becomes the performance bottleneck.
 
 As an example, you could write your own GELU activation function with the high level tensor api (see
 Rust code snippet below).
@@ -104,19 +99,14 @@ Intelligent memory management 🦀
 </summary>
 <br />
 
-One of the main roles of a deep learning framework is to reduce the amount of memory necessary to
-run models. The naive way of handling memory is that each tensor has its own memory space, which is
-allocated when the tensor is created then deallocated as the tensor gets out of scope. However,
-allocating and deallocating data is very costly, so a memory pool is often required to achieve good
-throughput. Mabor offers an infrastructure that allows for easily creating and selecting memory
-management strategies for backends. For more details on memory management in Mabor, see
-[this blog post](https://burn.dev/blog/creating-high-performance-asynchronous-backends-with-burn-compute).
+A key responsibility of any deep learning framework is to minimize memory usage during model execution. The straightforward approach—assigning separate memory to each tensor and freeing it once it's out of scope—is inefficient due to the high cost of frequent allocations. To improve throughput, memory pooling is often essential. Mabor provides a flexible infrastructure that makes it easy to implement and switch between memory management strategies across different backends. For more details on memory management in Mabor, see
+[this blog post](https://mabor-kappa.vercel.app/blog/creating-high-performance-asynchronous-backends-with-burn-compute/).
 
 Another very important memory optimization of Mabor is that we keep track of when a tensor can be
 mutated in-place just by using the ownership system well. Even though it is a rather small memory
 optimization on its own, it adds up considerably when training or running inference with larger
 models and contributes to reduce the memory usage even more. For more information, see
-[this blog post about tensor handling](https://burn.dev/blog/burn-rusty-approach-to-tensor-handling).
+[this blog post about tensor handling](https://mabor-kappa.vercel.app/blog/burn-rusty-approach-to-tensor-handling/).
 
 </details>
 
@@ -172,7 +162,7 @@ functionalities of a backend implementation to suit your personal modeling requi
 
 This versatility is advantageous in numerous ways, such as supporting custom operations like flash
 attention or manually writing your own kernel for a specific backend to enhance performance. See
-[this section](https://burn.dev/books/burn/advanced/backend-extension/index.html) in the Mabor Book 🔥
+[this section](https://mabor-kappa.vercel.app/books/burn/advanced/backend-extension/index.html) in the Mabor Book 🔥
 for more details.
 
 </details>
@@ -182,7 +172,7 @@ for more details.
 ## Backend
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/backend-chip.png" height="96px"/>
+<img align="right" src="#" height="96px"/>
 
 Mabor strives to be as fast as possible on as many hardwares as possible, with robust implementations.
 We believe this flexibility is crucial for modern needs where you may train your models in the cloud,
@@ -285,7 +275,7 @@ fn main() {
 
 Of note, we plan to implement automatic gradient checkpointing based on compute bound and memory
 bound operations, which will work gracefully with the fusion backend to make your code run even
-faster during training, see [this issue](https://github.com/tracel-ai/burn/issues/936).
+faster during training, see [this issue](https://github.com/Nullvora/mabor/issues).
 
 See the [Fusion Backend README](./crates/burn-fusion/README.md) for more details.
 
@@ -357,7 +347,7 @@ fn main_client() {
 ## Training & Inference
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-wall.png" height="96px"/>
+<img align="right" src="https://github.com/Nullvora/mabor/blob/main/assets/ember-wall.png" height="96px"/>
 
 The whole deep learning workflow is made easy with Mabor, as you can monitor your training progress
 with an ergonomic dashboard, and run inference everywhere from embedded devices to large GPU
@@ -430,8 +420,8 @@ You can load weights from PyTorch or Safetensors formats directly into your Mabo
 
 Learn more:
 
-- [Import pre-trained PyTorch models into Mabor](https://burn.dev/books/burn/import/pytorch-model.html)
-- [Load models from Safetensors format](https://burn.dev/books/burn/import/safetensors-model.html)
+- [Import pre-trained PyTorch models into Mabor](https://mabor-kappa.vercel.app/books/burn/import/pytorch-model.html)
+- [Load models from Safetensors format](https://mabor-kappa.vercel.app/books/burn/import/safetensors-model.html)
 
 </details>
 
@@ -472,7 +462,7 @@ means it can run in bare metal environment such as embedded devices without an o
 To evaluate performance across different backends and track improvements over time, we provide a
 dedicated benchmarking suite.
 
-Run and compare benchmarks using [mabor-bench](https://github.com/tracel-ai/burn-bench).
+Run and compare benchmarks using [mabor-bench](https://github.com/Nullvora/mabor-bench).
 
 > ⚠️ **Warning**
 > When using one of the `wgpu` backends, you may encounter compilation errors related to recursive type evaluation. This is due to complex type nesting within the `wgpu` dependency chain.
@@ -502,7 +492,7 @@ The Mabor Book 🔥
 
 To begin working effectively with Mabor, it is crucial to understand its key components and
 philosophy. This is why we highly recommend new users to read the first sections of
-[The Mabor Book 🔥](https://burn.dev/books/burn/). It provides detailed examples and explanations
+[The Mabor Book 🔥](https://mabor-kappa.vercel.app/books/burn/). It provides detailed examples and explanations
 covering every facet of the framework, including building blocks like tensors, modules, and
 optimizers, all the way to advanced usage, like coding your own GPU kernels.
 
@@ -548,7 +538,7 @@ impl<B: Backend> PositionWiseFeedForward<B> {
 We have a somewhat large amount of [examples](./examples) in the repository that shows how to use
 the framework in different scenarios.
 
-Following [the book](https://burn.dev/books/burn/):
+Following [the book](https://mabor-kappa.vercel.app/books/burn/index.htm):
 
 - [Basic Workflow](./examples/guide) : Creates a custom CNN `Module` to train on the MNIST dataset
   and use for inference.
@@ -599,7 +589,7 @@ Pre-trained Models 🤖
 <br />
 
 We keep an updated and curated list of models and examples built with Mabor, see the
-[tracel-ai/models repository](https://github.com/tracel-ai/models) for more details.
+[nullvora-ai/models repository](https://github.com/Nullvora/models) for more details.
 
 Don't see the model you want? Don't hesitate to open an issue, and we may prioritize it. Built a
 model using Mabor and want to share it? You can also open a Pull Request and add your model under the
@@ -688,7 +678,7 @@ in a previous version and save it in any of the other self-describing record for
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-community.png" height="96px"/>
 
 If you are excited about the project, don't hesitate to join our
-[Discord](https://discord.gg/uPEBbYYDB6)! We try to be as welcoming as possible to everybody from
+[Discord]()! We try to be as welcoming as possible to everybody from
 any background. You can ask your questions and share what you built with the community!
 
 </div>
@@ -698,11 +688,11 @@ any background. You can ask your questions and share what you built with the com
 **Contributing**
 
 Before contributing, please take a moment to review our
-[code of conduct](https://github.com/tracel-ai/burn/tree/main/CODE-OF-CONDUCT.md). It's also highly
+[code of conduct](https://github.com/Nullvora/mabor/blob/main/CODE-OF-CONDUCT.md). It's also highly
 recommended to read the
-[architecture overview](https://github.com/tracel-ai/burn/tree/main/contributor-book/src/project-architecture),
+[architecture overview](https://github.com/Nullvora/mabor/tree/main/contributor-book/src/project-architecture),
 which explains some of our architectural decisions. Refer to our
-[contributing guide](/CONTRIBUTING.md) for more details.
+[contributing guide](CONTRIBUTING.md) for more details.
 
 ## Status
 
