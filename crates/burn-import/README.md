@@ -1,4 +1,4 @@
-# Burn Import
+# Mabor Import
 
 The `burn-import` crate enables seamless integration of pre-trained models from popular machine
 learning frameworks into the Burn ecosystem. This functionality allows you to leverage existing
