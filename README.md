@@ -69,7 +69,7 @@ Asynchronous execution also ensures that the normal execution of the framework d
 model computations, which implies that the framework overhead won't impact the speed of execution
 significantly. Conversely, the intense computations in the model do not interfere with the
 responsiveness of the framework. For more information about our asynchronous backends, see
-[this blog post](https://burn.dev/blog/creating-high-performance-asynchronous-backends-with-burn-compute).
+[this blog post](https://www.mabor.dev/blog/creating-high-performance-asynchronous-backends-with-burn-compute/index.htm).
 
 </details>
 
@@ -100,13 +100,13 @@ Intelligent memory management 🦀
 <br />
 
 A key responsibility of any deep learning framework is to minimize memory usage during model execution. The straightforward approach—assigning separate memory to each tensor and freeing it once it's out of scope—is inefficient due to the high cost of frequent allocations. To improve throughput, memory pooling is often essential. Mabor provides a flexible infrastructure that makes it easy to implement and switch between memory management strategies across different backends. For more details on memory management in Mabor, see
-[this blog post](https://mabor-kappa.vercel.app/blog/creating-high-performance-asynchronous-backends-with-burn-compute/).
+[this blog post](https://www.mabor.dev/blog/creating-high-performance-asynchronous-backends-with-burn-compute/index.htm).
 
 Another very important memory optimization of Mabor is that we keep track of when a tensor can be
 mutated in-place just by using the ownership system well. Even though it is a rather small memory
 optimization on its own, it adds up considerably when training or running inference with larger
 models and contributes to reduce the memory usage even more. For more information, see
-[this blog post about tensor handling](https://mabor-kappa.vercel.app/blog/burn-rusty-approach-to-tensor-handling/).
+[this blog post about tensor handling](https://www.mabor.dev/blog/burn-rusty-approach-to-tensor-handling/index.htm).
 
 </details>
 
@@ -162,7 +162,7 @@ functionalities of a backend implementation to suit your personal modeling requi
 
 This versatility is advantageous in numerous ways, such as supporting custom operations like flash
 attention or manually writing your own kernel for a specific backend to enhance performance. See
-[this section](https://mabor-kappa.vercel.app/books/burn/advanced/backend-extension/index.html) in the Mabor Book 🔥
+[this section](https://www.mabor.dev/books/burn/advanced/backend-extension/index.html) in the Mabor Book 🔥
 for more details.
 
 </details>
@@ -238,7 +238,7 @@ Of note, it is impossible to make the mistake of calling backward on a model tha
 that does not support autodiff (for inference), as this method is only offered by an Autodiff
 backend.
 
-See the [Autodiff Backend README](./crates/burn-autodiff/README.md) for more details.
+See the [Autodiff Backend README](https://github.com/Nullvora/mabor/blob/main/crates/burn-autodiff/README.md) for more details.
 
 </details>
 
@@ -277,7 +277,7 @@ Of note, we plan to implement automatic gradient checkpointing based on compute 
 bound operations, which will work gracefully with the fusion backend to make your code run even
 faster during training, see [this issue](https://github.com/Nullvora/mabor/issues).
 
-See the [Fusion Backend README](./crates/burn-fusion/README.md) for more details.
+See the [Fusion Backend README](https://github.com/Nullvora/mabor/blob/main/crates/burn-fusion/README.md) for more details.
 
 </details>
 
@@ -403,10 +403,10 @@ you have written in another framework like TensorFlow or PyTorch to Mabor to ben
 advantages our framework offers.
 
 Our ONNX support is further described in
-[this section of the Mabor Book 🔥](https://burn.dev/books/burn/import/onnx-model.html).
+[this section of the Mabor Book 🔥](https://mabor.dev/books/burn/import/onnx-model.html).
 
 > **Note**: This crate is in active development and currently supports a
-> [limited set of ONNX operators](./crates/burn-import/SUPPORTED-ONNX-OPS.md).
+> [limited set of ONNX operators](https://github.com/Nullvora/mabor/blob/main/crates/burn-import/README.md).
 
 </details>
 
@@ -420,8 +420,8 @@ You can load weights from PyTorch or Safetensors formats directly into your Mabo
 
 Learn more:
 
-- [Import pre-trained PyTorch models into Mabor](https://mabor-kappa.vercel.app/books/burn/import/pytorch-model.html)
-- [Load models from Safetensors format](https://mabor-kappa.vercel.app/books/burn/import/safetensors-model.html)
+- [Import pre-trained PyTorch models into Mabor](https://mabor.dev/books/burn/import/pytorch-model.html)
+- [Load models from Safetensors format](https://mabor.dev/books/burn/import/safetensors-model.html)
 
 </details>
 
@@ -492,7 +492,7 @@ The Mabor Book 🔥
 
 To begin working effectively with Mabor, it is crucial to understand its key components and
 philosophy. This is why we highly recommend new users to read the first sections of
-[The Mabor Book 🔥](https://mabor-kappa.vercel.app/books/burn/). It provides detailed examples and explanations
+[The Mabor Book 🔥](https://mabor.dev/books/burn/). It provides detailed examples and explanations
 covering every facet of the framework, including building blocks like tensors, modules, and
 optimizers, all the way to advanced usage, like coding your own GPU kernels.
 
@@ -538,7 +538,7 @@ impl<B: Backend> PositionWiseFeedForward<B> {
 We have a somewhat large amount of [examples](./examples) in the repository that shows how to use
 the framework in different scenarios.
 
-Following [the book](https://mabor-kappa.vercel.app/books/burn/index.htm):
+Following [the book](https://mabor.dev/books/burn/index.htm):
 
 - [Basic Workflow](./examples/guide) : Creates a custom CNN `Module` to train on the MNIST dataset
   and use for inference.
@@ -560,7 +560,7 @@ Additional examples:
 - [Image Classification Web](./examples/image-classification-web) : Image classification web browser
   demo using Mabor, WGPU and WebAssembly.
 - [MNIST Inference on Web](./examples/mnist-inference-web) : An interactive MNIST inference demo in
-  the browser. The demo is available [online](https://burn.dev/demo/).
+  the browser. The demo is available [online](https://mabor.dev/demo/).
 - [MNIST Training](./examples/mnist) : Demonstrates how to train a custom `Module` (MLP) with the
   `Learner` configured to log metrics and keep training checkpoints.
 - [Named Tensor](./examples/named-tensor) : Performs operations with the experimental `NamedTensor`
@@ -635,7 +635,7 @@ leads to more reliable, bug-free solutions built faster (after some practice �
 
 <!-- >
 > In the event that you are trying to load a model record saved in a previous version, make sure to
-> enable the `record-backward-compat` feature using a previous version of burn (<=0.16.0). Otherwise,
+> enable the `record-backward-compat` feature using a previous version of mabor (<=0.16.0). Otherwise,
 > the record won't be deserialized correctly and you will get an error message (which will also point
 > you to the backward compatible feature flag). The backward compatibility was maintained for
 > deserialization (loading), so as soon as you have saved the record again it will be saved according
