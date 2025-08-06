@@ -1,3 +1,3 @@
-# Burn Fusion
+# Mabor Fusion
 
 A kernel fusion backend decorator for Burn.
