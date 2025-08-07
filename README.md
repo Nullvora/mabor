@@ -678,7 +678,7 @@ in a previous version and save it in any of the other self-describing record for
 <img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-community.png" height="96px"/>
 
 If you are excited about the project, don't hesitate to join our
-[Discord]()! We try to be as welcoming as possible to everybody from
+Discord! We try to be as welcoming as possible to everybody from
 any background. You can ask your questions and share what you built with the community!
 
 </div>
