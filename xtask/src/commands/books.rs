@@ -17,7 +17,7 @@ pub(crate) enum BookKind {
 }
 
 #[derive(clap::Args)]
-pub(crate) struct BookKindArgs {
+pub(crate) struct BookKindArgs { 
     #[command(subcommand)]
     command: BookSubCommand,
 }
