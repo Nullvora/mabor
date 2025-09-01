@@ -1,6 +1,6 @@
 [environment]
 gcp_gpu_attached = true
-gcp_image_family = "tracel-ci-ubuntu-2404-amd64-nvidia"
+gcp_image_family = "tracel-ci-ubuntu-2404-amd64-nvidia" 
 # https://cloud.google.com/compute/docs/accelerator-optimized-machines
 gcp_machine_types = [
   "a2-highgpu-1g", # 1 A100 40GB
